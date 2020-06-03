@@ -16,3 +16,9 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::group(['prefix' => 'foreign-transactions'], function () {
+    Route::get('', 'Cms\ForeignTransactionController@index')->name('cms.foreign-transactions.index');
+    Route::get('create', 'Cms\ForeignTransactionController@create')->name('cms.foreign-transactions.create');
+    Route::post('store', 'Cms\ForeignTransactionController@store')->name('cms.foreign-transactions.store');
+});
