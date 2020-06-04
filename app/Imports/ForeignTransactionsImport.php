@@ -41,11 +41,11 @@ class ForeignTransactionsImport implements ToCollection
                 // Pre processing change value & percentage
                 // Set value to positive if value is Rise
                 // Set value to negative if value if Fall
+                $changeValue = intval(str_replace(',', '', $row[3]));
                 if (Arr::get($row, '2') == 'Rise') {
-                    $changeValue = $row[3];
                     $changePercentage = $row[4];
                 } else {
-                    $changeValue = $row[3] * -1;
+                    $changeValue = $changeValue * -1;
                     $changePercentage = $row[4] * -1;
                 }
 
@@ -93,7 +93,11 @@ class ForeignTransactionsImport implements ToCollection
             DB::commit();
         } catch (\Exception $exception) {
             DB::rollBack();
-            dd($exception);
+            dd([
+                'exception' => $exception,
+                'data' => $data,
+                'row' => $row,
+            ]);
         }
     }
 }
