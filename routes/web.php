@@ -21,4 +21,6 @@ Route::group(['prefix' => 'foreign-transactions'], function () {
     Route::get('', 'Cms\ForeignTransactionController@index')->name('cms.foreign-transactions.index');
     Route::get('create', 'Cms\ForeignTransactionController@create')->name('cms.foreign-transactions.create');
     Route::post('store', 'Cms\ForeignTransactionController@store')->name('cms.foreign-transactions.store');
+    Route::get('create-v2', 'Cms\ForeignTransactionController@createV2')->name('cms.foreign-transactions.create.v2');
+    Route::post('store-v2', 'Cms\ForeignTransactionController@storeV2')->name('cms.foreign-transactions.store.v2');
 });

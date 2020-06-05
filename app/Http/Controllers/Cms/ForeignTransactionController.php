@@ -54,4 +54,46 @@ class ForeignTransactionController extends Controller
         return redirect()->route('cms.foreign-transactions.index')
             ->with('success', 'Import csv success.');
     }
+
+    public function createV2()
+    {
+        return view($this->viewPathPrefix . 'create-v2');
+    }
+
+    public function storeV2(Request $request) {
+        // Validation and get data
+        $validator = Validator::make($request->all(), [
+            'csvFiles' => 'required|array',
+            'csvFiles.*' => 'file',
+        ]);
+        if ($validator->fails()) {
+            throw ValidationException::withMessages($validator->errors()->toArray());
+        }
+
+        // Csv files
+        $csvFiles = $request->file('csvFiles', []);
+        foreach ($csvFiles as $csvFile) {
+
+            /**
+             * Get transaction date && transaction type
+             * Filename format: 2020-06-03_buy_volume.csv
+             * 2020-06-03 = date(YYYY-MM-DD)
+             * buy = action (buy/sell)
+             * volume = type (volume/value)
+             */
+            $fileNameWithExt = $csvFile->getClientOriginalName();
+            $fileNameWithoutExt = Arr::get(explode('.', $fileNameWithExt), '0', '__');
+            $transactionDate = Arr::get(explode('_', $fileNameWithoutExt), '0', '');
+            $transactionType = Arr::get(explode('_', $fileNameWithoutExt), '2', '');
+
+            Excel::import(
+                new ForeignTransactionsImport($transactionDate, $transactionType),
+                $csvFile
+            );
+        }
+
+        // Return success
+        return redirect()->route('cms.foreign-transactions.index')
+            ->with('success', 'Import csv success.');
+    }
 }
