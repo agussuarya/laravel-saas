@@ -85,7 +85,8 @@
                 </div>
 
                 <div class="links">
-                    <a href="{{ route('cms.foreign-transactions.index') }}">Foreign Transactions</a>
+                    <a href="{{ route('cms.foreign-transactions.index') }}">{{ __('Foreign Transactions') }}</a>
+                    <a href="{{ route('cms.holding-compositions.index') }}">{{ __('Holding Compositions') }}</a>
                 </div>
             </div>
         </div>
