@@ -10,6 +10,10 @@ class ForeignTransaction extends Model
     const TYPE_VOLUME = 'volume';
     const TYPE_VALUE = 'value';
 
+    protected $dates = [
+        'transaction_date',
+    ];
+
     protected $fillable = [
         'transaction_date',
         'stock_code',
