@@ -9,7 +9,7 @@
     </div>
 @endif
 
-<form id="createForeignTransactionForm" method="post" action="{{ route('cms.holding-compositions.store') }}" enctype="multipart/form-data">
+<form id="createShareholderCompositionsForm" method="post" action="{{ route('cms.shareholder-compositions.store') }}" enctype="multipart/form-data">
     @method('post')
     @csrf()
     <label for="txtFile">{{ __('Txt file') }}</label><br/>

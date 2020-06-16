@@ -4,19 +4,19 @@ namespace App\Http\Controllers\Cms;
 
 use App\Http\Controllers\Controller;
 use App\Imports\ForeignTransactionsImport;
-use App\Imports\HoldingCompositionsImport;
+use App\Imports\ShareholderCompositionsImport;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\ValidationException;
 use Maatwebsite\Excel\Facades\Excel;
 
-class HoldingCompositionController extends Controller
+class ShareholderCompositionController extends Controller
 {
     private $viewPathPrefix;
 
     public function __construct()
     {
-        $this->viewPathPrefix = 'cms.holding-compositions.';
+        $this->viewPathPrefix = 'cms.shareholder-compositions.';
     }
 
     public function index()
@@ -40,10 +40,10 @@ class HoldingCompositionController extends Controller
         $validated = $validator->validated();
 
         // Import csv file
-        Excel::import(new HoldingCompositionsImport(), $validated['txtFile']);
+        Excel::import(new ShareholderCompositionsImport(), $validated['txtFile']);
 
         // Return success
-        return redirect()->route('cms.holding-compositions.index')
+        return redirect()->route('cms.shareholder-compositions.index')
             ->with('success', 'Import txt success.');
     }
 }
